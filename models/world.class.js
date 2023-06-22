@@ -1,5 +1,9 @@
 class World {
 
+    canvas;
+    ctx; // stellt bereit: ctx.clearRect(...,...,...,...) , ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    keyboard;
+
     character = new Character(); // Klassen-Variablen hier ohne 'this' (#in Constructor)
     enemies = [
         new Chicken(),
@@ -15,35 +19,27 @@ class World {
         new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 0),
         new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 0)
     ]
-    canvas;
-    ctx;
 
-    // Variablen und #funktionen im Constructor immer mit 'this' ((für Instanzen))
-    constructor(canvas) { // canvas wurde in game.js an world('canvas') übergeben
-        this.ctx = canvas.getContext('2d'); // durch getContext('2d') wird das Zeichen in canvas bereitgestellt
+    // Variablen und #funktionen im Constructor immer mit 'this' davor ((für Instanzen))
+    constructor(canvas, keyboard) { // canvas wurde in game.js an world('canvas') übergeben (dann auch an (alle) Objekte (zB character) )
+        this.ctx = canvas.getContext('2d'); // durch getContext('2d') werden die 'Zeichen'-Funktionen in canvas bereitgestellt
         this.canvas = canvas;
-        this.draw(); // draw nutzt nun (in dieser Instanz = 'this') ctx zum Zeichnen (s.u. draw() )
+        this.keyboard = keyboard;
+        this.draw(); // Funktion wird unten definiert
+        this.setWorld(); // Variablen aus world können so an die Instanzen weitergegeben werden
     }
 
-    draw() { // = world.draw (zeichnet die gesamte Map)
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleared canvas vor jedem neuem draw()
+    setWorld() { // this steht ja hier für eine Instanz der Klasse World
+        this.character.world = this; // So Variablen von world (zB 'keyboard') in character nutzbar
+    }
 
-        this.addObjectsToMap(this.backgroundObjects);
+    draw() { // this.draw (hier = world.draw) zeichnet die gesamte Map
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleared canvas vor jedem neuem draw() The cleared area is set to tranparent rgba(0,0,0,0).
+
+        this.addObjectsToMap(this.backgroundObjects); // 'addObjectsToMap' wird unten defeniniert (zeichnet auf canvas)
         this.addObjectsToMap(this.clouds);
-        this.addObjectsToMap(this.enemies); // Mit 'forEach'  einzelne enemies --> dann mit 'addToMap' zu Map hinzugefügt
-        this.addToMap(this.character); // Character zu Map hinzugefügt
-
-        /* this.enemies.forEach(enemy => {
-            this.addToMap(enemy);
-        });
-
-        this.clouds.forEach(cloud => {
-            this.addToMap(cloud);
-        });
-
-        this.backgroundObjects.forEach(bgo => {
-            this.addToMap(bgo);
-        }); */
+        this.addObjectsToMap(this.enemies);
+        this.addToMap(this.character); // 'addToMap' wird unten defeniniert(zeichnet auf canvas)
 
         let self = this; // neuere Objektorientierung kennt self, aber nicht this
         requestAnimationFrame(() => { // die Funktion in requestA... wird (asynchron / etwas später) ausgeführt, sobald alles (von 'oben')        
@@ -58,7 +54,22 @@ class World {
         });
     }
 
-    addToMap(mo) {
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    addToMap(mo) { // mo ... jeweiliges moveable-object (ist jeweils ein new Image() )
+        // img wird gespiegelt
+        if (mo.otherDirection) { // prüft, ob jeweiliges mo eine Eigenschaft otherDirection hat
+            this.ctx.save(); // aktuelle Context-Einstellungen werden gespeichert
+            this.ctx.translate(mo.width, 0); // mo wird um die Breite des mo verschoben (würde sonst beim Spiegeln um  diesesn Wert 'springen')
+            this.ctx.scale(-1, 1); // spiegeln
+            mo.x = mo.x * -1; // x-Koordinate umgekehrt
+        }
+
+        // eigentliches Zeichnen
+        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height); // drawImage() draws an image, canvas, or video onto the canvas.
+
+        // Context-Einstellungen werden auf oben gespeicherte Einstellungen zurückgesetzt
+        if (mo.otherDirection) {
+            mo.x = mo.x * -1; // x-Koordinate umgekehrt
+            this.ctx.restore();
+        }
     }
 }
