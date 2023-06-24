@@ -3,22 +3,10 @@ class World {
     canvas;
     ctx; // stellt bereit: ctx.clearRect(...,...,...,...) , ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
     keyboard;
+    camera_x = 0; // Verschiebt gesamten ctx --> in draw()  (+ Character muss mit entgegengesetztem Wert verschoben werden)
 
     character = new Character(); // Klassen-Variablen hier ohne 'this' (#in Constructor)
-    enemies = [
-        new Chicken(),
-        new Chicken(),
-        new Chicken()
-    ];
-    clouds = [
-        new Cloud()
-    ]
-    backgroundObjects = [
-        new BackgroundObject('img/5_background/layers/air.png', 0),
-        new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 0),
-        new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 0),
-        new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 0)
-    ]
+    level = level1;
 
     // Variablen und #funktionen im Constructor immer mit 'this' davor ((für Instanzen))
     constructor(canvas, keyboard) { // canvas wurde in game.js an world('canvas') übergeben (dann auch an (alle) Objekte (zB character) )
@@ -36,10 +24,16 @@ class World {
     draw() { // this.draw (hier = world.draw) zeichnet die gesamte Map
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleared canvas vor jedem neuem draw() The cleared area is set to tranparent rgba(0,0,0,0).
 
-        this.addObjectsToMap(this.backgroundObjects); // 'addObjectsToMap' wird unten defeniniert (zeichnet auf canvas)
-        this.addObjectsToMap(this.clouds);
-        this.addObjectsToMap(this.enemies);
+        this.ctx.translate(this.camera_x, 0); // Verschiebung des gesamten ctx (Kamera) vor Zeichnen nach links
+
+        // Zeichnen
+        this.addObjectsToMap(this.level.backgroundObjects); // 'addObjectsToMap' wird unten defeniniert (zeichnet auf canvas)
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.enemies);
+
         this.addToMap(this.character); // 'addToMap' wird unten defeniniert(zeichnet auf canvas)
+
+        this.ctx.translate(-this.camera_x, 0); // Verschiebung des gesamten ctx (Kamera) nach Zeichnen wieder zurück
 
         let self = this; // neuere Objektorientierung kennt self, aber nicht this
         requestAnimationFrame(() => { // die Funktion in requestA... wird (asynchron / etwas später) ausgeführt, sobald alles (von 'oben')        

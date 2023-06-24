@@ -2,7 +2,7 @@ class Character extends MoveableObject {
 
     height = 280;
     y = 155;
-    speed = 1;
+    speed = 5;
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -24,14 +24,15 @@ class Character extends MoveableObject {
     animate() {
         setInterval(() => {
             // movement to the right
-            if (this.world.keyboard.RIGHT) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.x += this.speed;
                 this.otherDirection = false; // Object wird nicht gespiegelt
             }
-            if (this.world.keyboard.LEFT) {
+            if (this.world.keyboard.LEFT && this.x > -615) {
                 this.x -= this.speed;
                 this.otherDirection = true; // Object wird gespiegelt (in draw() Methode --> addtoMap() in world.js)
             }
+            this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
