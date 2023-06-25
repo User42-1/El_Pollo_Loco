@@ -12,7 +12,7 @@ class Character extends MoveableObject {
         'img/2_character_pepe/2_walk/W-26.png'
     ];
 
-    world; // damit Zugriff auf Variablen aus world (zB 'keyboard') (über Funktion setworld() in world.class.js)
+    /* world; */ // damit Zugriff auf Variablen aus world (zB 'keyboard') (über Funktion setworld() in world.class.js)
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png'); // function from parent-class

@@ -1,8 +1,8 @@
 class World {
 
-    canvas;
+    /* canvas; */
     ctx; // stellt bereit: ctx.clearRect(...,...,...,...) , ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-    keyboard;
+    /* keyboard; */
     camera_x = 0; // Verschiebt gesamten ctx --> in draw()  (+ Character muss mit entgegengesetztem Wert verschoben werden)
 
     character = new Character(); // Klassen-Variablen hier ohne 'this' (#in Constructor)
@@ -18,7 +18,7 @@ class World {
     }
 
     setWorld() { // this steht ja hier für eine Instanz der Klasse World
-        this.character.world = this; // So Variablen von world (zB 'keyboard') in character nutzbar
+        this.character.world = this; // So werden Variablen von world (zB 'keyboard') in character nutzbar
     }
 
     draw() { // this.draw (hier = world.draw) zeichnet die gesamte Map
