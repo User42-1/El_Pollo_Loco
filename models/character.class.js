@@ -13,6 +13,7 @@ class Character extends MoveableObject {
     ];
 
     /* world; */ // damit Zugriff auf Variablen aus world (zB 'keyboard') (über Funktion setworld() in world.class.js)
+    walking_sound = new Audio('audio/running_on_grass.wav')
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png'); // function from parent-class
@@ -24,13 +25,16 @@ class Character extends MoveableObject {
     animate() {
         setInterval(() => {
             // movement to the right
+            this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.x += this.speed;
                 this.otherDirection = false; // Object wird nicht gespiegelt
+                this.walking_sound.play();
             }
             if (this.world.keyboard.LEFT && this.x > -615) {
                 this.x -= this.speed;
                 this.otherDirection = true; // Object wird gespiegelt (in draw() Methode --> addtoMap() in world.js)
+                this.walking_sound.play();
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);

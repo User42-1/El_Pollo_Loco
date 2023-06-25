@@ -11,7 +11,7 @@ function init() {
     console.log('My Character is', world.character);
 }
 
-window.addEventListener('keydown', (e) => { // Key_statuses are stored in the above created keyboard_instance
+window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') {
         keyboard.RIGHT = true;
     }
@@ -29,7 +29,7 @@ window.addEventListener('keydown', (e) => { // Key_statuses are stored in the ab
     }
 }); // Eventlistener returns JSON with the respective events (('keypress' returns when character-keys are hit, not arrow-keys))
 
-window.addEventListener('keydown', (e) => {
+window.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowRight') {
         keyboard.RIGHT = false;
     }
