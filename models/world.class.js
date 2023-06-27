@@ -6,7 +6,7 @@ class World {
     camera_x = 0; // Verschiebt gesamten ctx --> in draw()  (+ Character muss mit entgegengesetztem Wert verschoben werden)
 
     character = new Character(); // Klassen-Variablen hier ohne 'this' (#in Constructor)
-    level = level1;
+    level = level1; // Here all other moveable Objects are spawned
 
     // Variablen und #funktionen im Constructor immer mit 'this' davor ((für Instanzen))
     constructor(canvas, keyboard) { // canvas wurde in game.js an world('canvas') übergeben (dann auch an (alle) Objekte (zB character) )
