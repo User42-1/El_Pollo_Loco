@@ -8,7 +8,22 @@ class MoveableObject {
     currentImage = 0;
     speed = 0.15;
     otherDirection = false; // Image wird gespiegelt (in draw() Methode --> addtoMap() in world.js)
+    speedy = 0;
+    acceleration = 2.5;
 
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedy > 0) {
+                this.y -= this.speedy;
+                this.speedy -= this.acceleration;
+            }
+        }, 1000 / 25)
+    }
+
+    isAboveGround() {
+        return this.y < 155;
+    }
 
     // loadImage('img/test.png')
     loadImage(path) { // erstellt eine neues Image-Objekt, weist diesem einen Quellpfad zu und gibt es "im Hintergrund zurück" --> Das zurückgegebene Obj kann dann an anderer Stelle im Code vervendet oder auf dem Canvas angezeigt werden. 
@@ -30,15 +45,24 @@ class MoveableObject {
     }
 
     moveRight() {
-        console.log("movableObject moves to the right");
+        this.x += this.speed;
     }
 
     /**
      * moves object to the left () by the value of 'speed' at every new frame (60 fps)
      */
     moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60);
+        this.x -= this.speed;
+    }
+
+    jump() {
+        this.speedy = 30;
+    }
+
+    playAnimation(animation) {
+        let i = this.currentImage % animation.length; // let i = (5 % 6) => 0 ; Rest 5
+        let path = animation[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
     }
 }
