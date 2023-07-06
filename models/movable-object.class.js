@@ -1,15 +1,10 @@
-class MoveableObject {
-    x = 120;
-    y = 280;
-    img;
-    height = 150;
-    width = 100;
-    imageCache = {};
-    currentImage = 0;
+class MoveableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false; // Image wird gespiegelt (in draw() Methode --> addtoMap() in world.js)
     speedy = 0;
     acceleration = 2.5;
+    energy = 100;
+    lastHit = 0;
 
 
     applyGravity() {
@@ -25,23 +20,27 @@ class MoveableObject {
         return this.y < 155;
     }
 
-    // loadImage('img/test.png')
-    loadImage(path) { // erstellt eine neues Image-Objekt, weist diesem einen Quellpfad zu und gibt es "im Hintergrund zurück" --> Das zurückgegebene Obj kann dann an anderer Stelle im Code vervendet oder auf dem Canvas angezeigt werden. 
-            this.img = new Image(); // Die Funktion Image() ist eine integrierte Funktion des HTML5 Canvas-Elements 
-            this.img.src = path; // dann wird img ein Quellpfad zugewiesen ( wie bei: <img id='image' src='...'> )
-        }
-        // ((Das Laden kann ggf etwas dauern und sollte deshalb überwacht werden: 1) image.onload = function() {callback(img);}; --> callback wird dann erst ausgeführt, wenn img vollständig geladen ist  oder  2) requestAnimationFrame() zB für Spiele))
+    isColliding(mo) {
+        return (this.x + this.width) >= mo.x && this.x <= (mo.x + mo.width) &&
+            (this.y + this.height) >= mo.y && this.y <= (mo.y + mo.height);
+    }
 
-    /**
-     * 
-     * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
-     */
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img; // path is here used as key  (the img-object is the value)
-        });
+    hit() {
+        this.energy -= 3;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
+        let timePassed = new Date().getTime() - this.lastHit;
+        return timePassed < 1000; // ms
+    }
+
+    isDead() {
+        return this.energy == 0;
     }
 
     moveRight() {
@@ -59,10 +58,12 @@ class MoveableObject {
         this.speedy = 30;
     }
 
-    playAnimation(animation) {
-        let i = this.currentImage % animation.length; // let i = (5 % 6) => 0 ; Rest 5
-        let path = animation[i];
+    playAnimation(images) {
+        let i = this.currentImage % images.length; // let i = (5 % 6) => 0 ; Rest 5
+        let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+        /*         if (images == this.IMAGES_DEAD && this.currentImage == this.IMAGES_DEAD.length - 1) { return; }
+         */
     }
 }
