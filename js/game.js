@@ -27,6 +27,10 @@ window.addEventListener('keydown', (e) => {
     if (e.key === ' ') {
         keyboard.SPACE = true;
     }
+    if (e.key === 'd' || e.key === 'D') {
+        keyboard.D = true;
+    }
+
 }); // Eventlistener returns JSON with the respective events (('keypress' returns when character-keys are hit, not arrow-keys))
 
 window.addEventListener('keyup', (e) => {
@@ -44,5 +48,8 @@ window.addEventListener('keyup', (e) => {
     }
     if (e.key === ' ') {
         keyboard.SPACE = false;
+    }
+    if (e.key === 'd' || e.key === 'D') {
+        keyboard.D = false;
     }
 });

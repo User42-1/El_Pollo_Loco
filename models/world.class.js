@@ -5,9 +5,12 @@ class World {
     /* keyboard; */
     camera_x = 0; // Verschiebt gesamten ctx --> in draw()  (+ Character muss mit entgegengesetztem Wert verschoben werden)
 
-    character = new Character(); // Klassen-Variablen hier ohne 'this' (#in Constructor)
     level = level1; // Here all other moveable Objects are spawned
+
+    character = new Character(); // Klassen-Variablen hier ohne 'this' (#in Constructor)
+    throwableObjects = [];
     statusBar = new Statusbar();
+
 
     // Variablen und #funktionen im Constructor immer mit 'this' davor ((für Instanzen))
     constructor(canvas, keyboard) { // canvas wurde in game.js an world('canvas') übergeben (dann auch an (alle) Objekte (zB character) )
@@ -17,21 +20,34 @@ class World {
         this.draw(); // Funktion wird unten definiert
         this.setWorld(); // Variablen aus world können so an die Instanzen weitergegeben werden
         this.checkCollisions();
+        this.run(); // checks collisions and if throwable object in instanciated by pressing 'D'
     }
 
     setWorld() { // this steht ja hier für eine Instanz der Klasse World
         this.character.world = this; // So werden Variablen von world (zB 'keyboard') in character nutzbar
     }
 
-    checkCollisions() {
+    run() { // checks collisions and if throwable object in instanciated by pressing 'D'
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
-                }
-            });
+            this.checkCollisions();
+            this.checkThrowObjects();
         }, 200);
+    }
+
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkThrowObjects() {
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+        }
     }
 
     draw() { // this.draw (hier = world.draw) zeichnet die gesamte Map
@@ -43,6 +59,8 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects); // 'addObjectsToMap' wird unten defeniniert (zeichnet auf canvas)
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+
+        this.addObjectsToMap(this.throwableObjects);
 
         this.addToMap(this.character); // 'addToMap' wird unten defeniniert(zeichnet auf canvas)
 
