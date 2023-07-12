@@ -1,9 +1,68 @@
+@font-face {
+    font-family: 'zabras';
+    src: url('fonts/zabars.ttf') format('truetype');
+}
+
 body {
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    background-image: url("img/5_background/desert4_1920.png");
+    background-size: cover;
+    background-position: center;
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 64px;
+    letter-spacing: 3px;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.startscreen {
+    /*     display: none;
+ */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 30px;
+    height: 500px;
+    width: 720px
 }
 
 canvas {
     background-color: black;
+    display: block;
+}
+
+.legend {
+    height: 100px;
+}
+
+
+/* canvas-width uses then alway full screen-width */
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+
+/* for mobile in rotated mode */
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
+
+    .headline {
+        display: none;
+    }
 }

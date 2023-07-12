@@ -51,9 +51,6 @@ class MoveableObject extends DrawableObject {
         this.x += this.speed;
     }
 
-    /**
-     * moves object to the left () by the value of 'speed' at every new frame (60 fps)
-     */
     moveLeft() {
         this.x -= this.speed;
     }

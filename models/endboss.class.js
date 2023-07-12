@@ -1,9 +1,9 @@
 class Endboss extends MoveableObject {
 
-    x = 500;
-    y = 55;
-    height = 400;
-    width = 300;
+    x = 0;
+    y = 145;
+    height = 300;
+    width = 250;
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -19,7 +19,7 @@ class Endboss extends MoveableObject {
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png'); // function from parent-class
-        this.x = 200 + Math.random() * 500; // (super nur für Methoden)
+        this.x = 500 + Math.random() * 500; // (super nur für Methoden)
 
         this.loadImages(this.IMAGES_WALKING);
 
