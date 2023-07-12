@@ -32,13 +32,19 @@ h1 {
     left: 50%;
     transform: translate(-50%, -50%);
     margin-top: 30px;
-    height: 500px;
-    width: 720px
+    height: 490px;
+    width: 720px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 30px rgb(66, 27, 27);
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
 }
 
 canvas {
     background-color: black;
     display: block;
+    border-radius: 10px;
+    box-shadow: 5px 5px 30px rgb(66, 27, 27);
 }
 
 .legend {

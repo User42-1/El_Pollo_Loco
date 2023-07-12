@@ -7,7 +7,7 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard); // variables canvas and keyboard are passed to the constructor in world.class.js
 
-    startscreen = document.getElementById('startscreen').style.display = 'none';
+    startscreen = document.getElementById('startscreen').style.opacity = '0';
 }
 
 window.addEventListener('keydown', (e) => {
