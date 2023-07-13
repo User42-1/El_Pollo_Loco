@@ -44,8 +44,6 @@ class Endboss extends MoveableObject {
             }
         }, 1000 / 200);
 
-        /* console.log(world.character.x); */
-
         setInterval(() => {
             if ((level1.enemies[3].x - world.character.x) < 250) {
                 this.playAnimation(this.IMAGES_ALERT);
@@ -53,8 +51,5 @@ class Endboss extends MoveableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);
-
-        /* console.log(level1.enemies[3].x); */
-
     }
 }

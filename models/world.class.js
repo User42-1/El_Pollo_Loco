@@ -8,6 +8,8 @@ class World {
     level = level1; // Here all other moveable Objects are spawned
 
     character = new Character(); // Klassen-Variablen hier ohne 'this' (#in Constructor)
+    /*     collectableObjects = [];
+     */
     throwableObjects = [];
     statusBar = new Statusbar();
 
@@ -60,6 +62,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
 
+        this.addObjectsToMap(this.level.collectableObjects);
         this.addObjectsToMap(this.throwableObjects);
 
         this.addToMap(this.character); // 'addToMap' wird unten defeniniert(zeichnet auf canvas)
