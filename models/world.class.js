@@ -14,6 +14,8 @@ class World {
     /*     collectableObjects = [];
      */
     statusBar = new Statusbar();
+    statusbarCoin = new StatusbarCoin();
+    statusbarBottle = new StatusbarBottle();
 
 
 
@@ -75,6 +77,8 @@ class World {
 
         // Zeichnen (all fixed objects)
         this.addToMap(this.statusBar);
+        this.addToMap(this.statusbarCoin);
+        this.addToMap(this.statusbarBottle);
 
 
         let self = this; // neuere Objektorientierung kennt self, aber nicht this

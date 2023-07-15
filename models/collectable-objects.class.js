@@ -31,12 +31,12 @@ class Bottle extends DrawableObject {
 
 class Coin extends DrawableObject {
 
-    y = 0;
-    width = 200;
-    height = 200;
+    y = 110;
+    width = 80;
+    height = 80;
 
     constructor() {
-        super().loadImage('img/8_coin/coin_1.png');
+        super().loadImage('img/7_statusbars/3_icons/icon_coin.png');
         this.x = -800 + Math.random() * 3000;
     }
 }
