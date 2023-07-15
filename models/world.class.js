@@ -11,7 +11,10 @@ class World {
     /*     collectableObjects = [];
      */
     throwableObjects = [];
+    /*     collectableObjects = [];
+     */
     statusBar = new Statusbar();
+
 
 
     // Variablen und #funktionen im Constructor immer mit 'this' davor ((für Instanzen))
@@ -62,7 +65,8 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
 
-        this.addObjectsToMap(this.level.collectableObjects);
+        this.addObjectsToMap(this.level.bottles_ground);
+        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.throwableObjects);
 
         this.addToMap(this.character); // 'addToMap' wird unten defeniniert(zeichnet auf canvas)

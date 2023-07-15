@@ -7,14 +7,6 @@ class MoveableObject extends DrawableObject {
     lastHit = 0;
 
 
-    applyGravity() {
-        setInterval(() => {
-            if (this.isAboveGround() || this.speedy > 0) {
-                this.y -= this.speedy;
-                this.speedy -= this.acceleration;
-            }
-        }, 1000 / 25)
-    }
 
     isAboveGround() {
         if (this instanceof ThrowableObject) { // ThrowableObjects should always fall
@@ -22,11 +14,6 @@ class MoveableObject extends DrawableObject {
         } else {
             return this.y < 155;
         }
-    }
-
-    isColliding(mo) {
-        return (this.x + this.width) >= mo.x && this.x <= (mo.x + mo.width) &&
-            (this.y + this.height) >= mo.y && this.y <= (mo.y + mo.height);
     }
 
     hit() {

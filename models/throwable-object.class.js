@@ -5,7 +5,7 @@ class ThrowableObject extends MoveableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
-        this.throw(); // nur testweise im Constructor (sonst dann auf Taste 'D')
+        this.throw();
     }
 
     throw () {

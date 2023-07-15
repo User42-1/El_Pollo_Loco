@@ -22,7 +22,28 @@ class Endboss extends MoveableObject {
         'img/4_enemie_boss_chicken/2_alert/G12.png'
     ]
 
+    IMAGES_ATTACK = [
+        'img/4_enemie_boss_chicken/3_attack/G13.png',
+        'img/4_enemie_boss_chicken/3_attack/G14.png',
+        'img/4_enemie_boss_chicken/3_attack/G15.png',
+        'img/4_enemie_boss_chicken/3_attack/G16.png',
+        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png'
+    ]
 
+    IMAGES_HURT = [
+        'img/4_enemie_boss_chicken/4_hurt/G21.png',
+        'img/4_enemie_boss_chicken/4_hurt/G22.png',
+        'img/4_enemie_boss_chicken/4_hurt/G23.png'
+    ]
+
+    IMAGES_DEAD = [
+        'img/4_enemie_boss_chicken/5_dead/G24.png',
+        'img/4_enemie_boss_chicken/5_dead/G25.png',
+        'img/4_enemie_boss_chicken/5_dead/G26.png'
+    ]
 
     speed = 0.3;
 
@@ -39,13 +60,13 @@ class Endboss extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            if ((level1.enemies[3].x - world.character.x) > 250) { // Distance charactor to endboss
+            if (world && (level1.enemies[3].x - world.character.x) > 250) { // Distance charactor to endboss
                 this.moveLeft();
             }
         }, 1000 / 200);
 
         setInterval(() => {
-            if ((level1.enemies[3].x - world.character.x) < 250) {
+            if (world && (level1.enemies[3].x - world.character.x) < 250) {
                 this.playAnimation(this.IMAGES_ALERT);
             } else {
                 this.playAnimation(this.IMAGES_WALKING);

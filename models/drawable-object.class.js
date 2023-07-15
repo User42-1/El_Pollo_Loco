@@ -41,4 +41,19 @@ class DrawableObject {
         });
     }
 
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedy > 0) {
+                this.y -= this.speedy;
+                this.speedy -= this.acceleration;
+            }
+        }, 1000 / 25)
+    }
+
+    isColliding(obj) {
+        return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
+            (this.y + this.height) >= obj.y && this.y <= (obj.y + obj.height);
+    }
+
 }
