@@ -26,7 +26,8 @@ class World {
         this.keyboard = keyboard;
         this.draw(); // Funktion wird unten definiert
         this.setWorld(); // Variablen aus world können so an die Instanzen weitergegeben werden
-        this.checkCollisions();
+        this.checkCollisionsWithEnemy();
+        this.checkCollisionsWithBottle();
         this.run(); // checks collisions and if throwable object in instanciated by pressing 'D'
     }
 
@@ -34,18 +35,30 @@ class World {
         this.character.world = this; // So werden Variablen von world (zB 'keyboard') in character nutzbar
     }
 
-    run() { // checks collisions and if throwable object in instanciated by pressing 'D'
+    run() { // checks collisions and if throwable object is called every 200ms
         setInterval(() => {
-            this.checkCollisions();
+            this.checkCollisionsWithEnemy();
+            this.checkCollisionsWithBottle();
             this.checkThrowObjects();
         }, 200);
     }
 
-    checkCollisions() {
+    checkCollisionsWithEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkCollisionsWithBottle() {
+        this.level.bottles_ground.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
+                /* console.log(index); */
+                BottleGround.numberCollectedBottles++;
+                /* console.log(BottleGround.numberCollectedBottles); */
+                delete world.level.bottles_ground[index];
             }
         });
     }
@@ -60,7 +73,7 @@ class World {
     draw() { // this.draw (hier = world.draw) zeichnet die gesamte Map
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleared canvas vor jedem neuem draw() The cleared area is set to tranparent rgba(0,0,0,0).
 
-        // Zeichnen (all moveable objects)
+        // Zeichnen (all moveable objects)  camera_x wird in character entsrechend vorgegeben
         this.ctx.translate(this.camera_x, 0); // Verschiebung des gesamten ctx (Kamera) vor Zeichnen nach links
 
         this.addObjectsToMap(this.level.backgroundObjects); // 'addObjectsToMap' wird unten defeniniert (zeichnet auf canvas)

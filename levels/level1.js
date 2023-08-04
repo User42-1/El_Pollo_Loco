@@ -8,12 +8,11 @@ let level1 = new Level(
 
         new Cloud()
     ], [
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle()
+        new BottleGround(),
+        new BottleGround(),
+        new BottleGround(),
+        new BottleGround(),
+        new BottleGround()
     ], [
         new Coin(),
         new Coin(),

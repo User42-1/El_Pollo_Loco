@@ -46,11 +46,16 @@ class MoveableObject extends DrawableObject {
         this.speedy = 30;
     }
 
-    playAnimation(images) {
+    playAnimation(images) { // currentImage = 0 <-- variable in moveableObject
         let i = this.currentImage % images.length; // let i = (5 % 6) => 0 ; Rest 5
         let path = images[i];
         this.img = this.imageCache[path];
-        this.currentImage++;
+        if (images[images.length - 2] == "img/2_character_pepe/5_dead/D-56.png") {
+            this.currentImage = 5;
+            this.world.character.y += 10;
+        } else {
+            this.currentImage++;
+        }
         /*         if (images == this.IMAGES_DEAD && this.currentImage == this.IMAGES_DEAD.length - 1) { return; }
          */
     }

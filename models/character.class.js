@@ -42,6 +42,7 @@ class Character extends MoveableObject {
 
     /* world; */ // damit Zugriff auf Variablen aus world (zB 'keyboard') (über Funktion setworld() in world.class.js)
     walking_sound = new Audio('audio/running_on_grass.wav');
+    jumping_sound = new Audio('audio/jump.wav');
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png'); // function from parent-class
@@ -70,6 +71,8 @@ class Character extends MoveableObject {
 
             if ((this.world.keyboard.UP || this.world.keyboard.SPACE) && !this.isAboveGround()) {
                 this.jump();
+                this.jumping_sound.volume = 0.1;
+                this.jumping_sound.play();
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);

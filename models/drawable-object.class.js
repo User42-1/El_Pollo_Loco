@@ -7,7 +7,6 @@ class DrawableObject {
     height = 150;
     width = 100;
 
-
     // loadImage('img/test.png')
     loadImage(path) { // erstellt eine neues Image-Objekt, weist diesem einen Quellpfad zu und gibt es "im Hintergrund zurück" --> Das zurückgegebene Obj kann dann an anderer Stelle im Code vervendet oder auf dem Canvas angezeigt werden. 
             this.img = new Image(); // Die Funktion Image() ist eine integrierte Funktion des HTML5 Canvas-Elements 
@@ -19,13 +18,14 @@ class DrawableObject {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height); // drawImage() draws an image, canvas, or video onto the canvas.
     }
 
+    // zeichnet Rahmen um Instanzen bestimmer Klassen
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Bottle || this instanceof Coin) {
-            ctx.beginPath();
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof BottleGround || this instanceof Coin) {
+            ctx.beginPath(); // Anfang eines Zeichenprozesses
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'blue';
             ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
+            ctx.stroke(); // Ende eines Zeichenprozesses
         }
     }
 
@@ -51,6 +51,7 @@ class DrawableObject {
         }, 1000 / 25)
     }
 
+    // zB character.isColliding(chicken)
     isColliding(obj) {
         return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
             (this.y + this.height) >= obj.y && this.y <= (obj.y + obj.height);
