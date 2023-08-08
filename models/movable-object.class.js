@@ -6,8 +6,6 @@ class MoveableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
-
-
     isAboveGround() {
         if (this instanceof ThrowableObject) { // ThrowableObjects should always fall
             return true;

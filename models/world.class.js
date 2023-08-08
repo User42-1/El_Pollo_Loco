@@ -16,6 +16,7 @@ class World {
     statusBar = new Statusbar();
     statusbarCoin = new StatusbarCoin();
     statusbarBottle = new StatusbarBottle();
+    lastCharacterY = 155;
 
 
 
@@ -37,15 +38,29 @@ class World {
 
     run() { // checks collisions and if throwable object is called every 200ms
         setInterval(() => {
+            this.characterIsMovingDownwards();
             this.checkCollisionsWithEnemy();
             this.checkCollisionsWithBottle();
             this.checkThrowObjects();
         }, 200);
     }
 
+    characterIsMovingDownwards() { // character in second phase of jump
+        let diffY = this.lastCharacterY - this.character.y;
+        this.lastCharacterY = this.character.y;
+        /* console.log(diffY); */
+        /* console.log(diffY < 0); */
+        return diffY < 0;
+    }
+
     checkCollisionsWithEnemy() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+        this.level.enemies.forEach((enemy, index) => { // index gives you the index of the enemy in the enemies-array
+            if (this.character.isColliding(enemy) && enemy instanceof Chicken && this.characterIsMovingDownwards) {
+                /* console.log('hit chicken');
+                console.log(index); */
+                delete this.level.enemies[index];
+                // dann img dead chicken anzeigen an dieser position
+            } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
@@ -58,7 +73,7 @@ class World {
                 /* console.log(index); */
                 BottleGround.numberCollectedBottles++;
                 /* console.log(BottleGround.numberCollectedBottles); */
-                delete world.level.bottles_ground[index];
+                delete this.level.bottles_ground[index];
             }
         });
     }
