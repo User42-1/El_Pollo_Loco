@@ -60,13 +60,13 @@ class Endboss extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            if (world && (level1.enemies[3].x - world.character.x) > 250) { // Distance charactor to endboss
+            if (world && (level1.enemies[(level1.enemies.length - 1)].x - world.character.x) > 250) { // Distance charactor to endboss
                 this.moveLeft();
             }
         }, 1000 / 200);
 
         setInterval(() => {
-            if (world && (level1.enemies[3].x - world.character.x) < 250) {
+            if (world && (level1.enemies[(level1.enemies.length - 1)].x - world.character.x) < 250) {
                 this.playAnimation(this.IMAGES_ALERT);
             } else {
                 this.playAnimation(this.IMAGES_WALKING);

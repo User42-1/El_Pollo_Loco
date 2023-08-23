@@ -5,6 +5,7 @@ class MoveableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    enemyIsDead = false;
 
     isAboveGround() {
         if (this instanceof ThrowableObject) { // ThrowableObjects should always fall
@@ -25,7 +26,7 @@ class MoveableObject extends DrawableObject {
 
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
-        return timePassed < 1000; // ms
+        return timePassed < 1500; // ms
     }
 
     isDead() {

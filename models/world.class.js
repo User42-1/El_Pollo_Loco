@@ -27,8 +27,6 @@ class World {
         this.keyboard = keyboard;
         this.draw(); // Funktion wird unten definiert
         this.setWorld(); // Variablen aus world können so an die Instanzen weitergegeben werden
-        this.checkCollisionsWithEnemy();
-        this.checkCollisionsWithBottle();
         this.run(); // checks collisions and if throwable object in instanciated by pressing 'D'
     }
 
@@ -38,11 +36,16 @@ class World {
 
     run() { // checks collisions and if throwable object is called every 200ms
         setInterval(() => {
+            this.characterIsAboveGround();
             this.characterIsMovingDownwards();
             this.checkCollisionsWithEnemy();
             this.checkCollisionsWithBottle();
             this.checkThrowObjects();
         }, 200);
+    }
+
+    characterIsAboveGround() {
+        return this.character.y < 155;
     }
 
     characterIsMovingDownwards() { // character in second phase of jump
@@ -55,11 +58,19 @@ class World {
 
     checkCollisionsWithEnemy() {
         this.level.enemies.forEach((enemy, index) => { // index gives you the index of the enemy in the enemies-array
-            if (this.character.isColliding(enemy) && enemy instanceof Chicken && this.characterIsMovingDownwards) {
-                /* console.log('hit chicken');
-                console.log(index); */
-                delete this.level.enemies[index];
-                // dann img dead chicken anzeigen an dieser position
+            if (this.character.isColliding(enemy) && enemy instanceof Chicken && this.characterIsAboveGround()
+                /* && this.characterIsMovingDownwards */
+                &&
+                !this.character.isHurt()
+            ) {
+                this.character.speedy = 30;
+                /* console.log('hit chicken: ', Index); */
+                /* let storeX = this.level.enemies[index].x; */
+                this.level.enemies[index].enemyIsDead = true;
+                setTimeout(() => {
+                    delete this.level.enemies[index];
+                    /* this.level.enemies.splice([index], 1); */
+                }, 1000)
             } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
