@@ -37,7 +37,7 @@ class BottleGround extends DrawableObject {
 
 class Coin extends DrawableObject {
 
-    y = 110;
+    y = 50;
     width = 80;
     height = 80;
 

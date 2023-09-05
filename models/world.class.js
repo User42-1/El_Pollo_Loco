@@ -80,10 +80,11 @@ class World {
 
     checkCollisionsWithBottle() {
         this.level.bottles_ground.forEach((bottle, index) => {
-            if (this.character.isColliding(bottle)) {
+            if (this.character.isColliding(bottle) && !this.character.isHurt()) {
                 /* console.log(index); */
                 BottleGround.numberCollectedBottles++;
-                /* console.log(BottleGround.numberCollectedBottles); */
+                console.log(BottleGround.numberCollectedBottles);
+                this.statusbarBottle.displayNumberBottles(BottleGround.numberCollectedBottles);
                 delete this.level.bottles_ground[index];
             }
         });
