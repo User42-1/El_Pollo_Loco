@@ -105,7 +105,11 @@ class World {
     checkThrowObjects() {
         if (this.keyboard.D) {
             let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
-            this.throwableObjects.push(bottle);
+            if (BottleGround.numberCollectedBottles > 0) {
+                this.throwableObjects.push(bottle);
+                BottleGround.numberCollectedBottles--;
+                this.statusbarBottle.displayNumberBottles(BottleGround.numberCollectedBottles);
+            }
         }
     }
 
