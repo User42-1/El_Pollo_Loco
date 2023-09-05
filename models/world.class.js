@@ -40,6 +40,7 @@ class World {
             this.characterIsMovingDownwards();
             this.checkCollisionsWithEnemy();
             this.checkCollisionsWithBottle();
+            this.checkCollisionsWithCoin();
             this.checkThrowObjects();
         }, 200);
     }
@@ -86,6 +87,17 @@ class World {
                 console.log(BottleGround.numberCollectedBottles);
                 this.statusbarBottle.displayNumberBottles(BottleGround.numberCollectedBottles);
                 delete this.level.bottles_ground[index];
+            }
+        });
+    }
+    checkCollisionsWithCoin() {
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin) && !this.character.isHurt()) {
+                /* console.log(index); */
+                Coin.numberCollectedCoins++;
+                console.log(Coin.numberCollectedCoins);
+                this.statusbarCoin.displayNumberCoins(Coin.numberCollectedCoins);
+                delete this.level.coins[index];
             }
         });
     }

@@ -19,7 +19,6 @@ let level1 = new Level(
         new Coin(),
         new Coin(),
         new Coin(),
-        new Coin()
     ], [
         new BackgroundObject('img/5_background/layers/air.png', -719), // Himmel
         new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),

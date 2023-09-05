@@ -40,6 +40,7 @@ class Coin extends DrawableObject {
     y = 50;
     width = 80;
     height = 80;
+    static numberCollectedCoins = 0;
 
     constructor() {
         super().loadImage('img/7_statusbars/3_icons/icon_coin.png');

@@ -58,7 +58,7 @@ class StatusbarCoin extends DrawableObject {
         'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png'
     ]
 
-    percentage = 100;
+    /* numberCoins = 0; */
 
 
     constructor() {
@@ -68,28 +68,28 @@ class StatusbarCoin extends DrawableObject {
         this.y = 40;
         this.width = 200;
         this.height = 50;
-        this.setPercentage(100);
+        this.displayNumberCoins(0);
     }
 
-    setPercentage(percentage) {
-        this.percentage = percentage; // => 0 ... 5
-        let path = this.IMAGES_BAR_COINS[this.resolveImageIndex()];
+    displayNumberCoins(numberCoins) {
+        this.numberCoins = numberCoins; // => 0 ... 5
+        let path = this.IMAGES_BAR_COINS[this.computeImageIndex()];
         this.img = this.imageCache[path];
     }
 
-    resolveImageIndex() {
-        if (this.percentage == 100) {
-            return 5
-        } else if (this.percentage > 80) {
-            return 4
-        } else if (this.percentage > 60) {
-            return 3
-        } else if (this.percentage > 40) {
-            return 2
-        } else if (this.percentage > 20) {
-            return 1
-        } else {
+    computeImageIndex() {
+        if (Coin.numberCollectedCoins == 0) {
             return 0
+        } else if (Coin.numberCollectedCoins == 1) {
+            return 1
+        } else if (Coin.numberCollectedCoins == 2) {
+            return 2
+        } else if (Coin.numberCollectedCoins == 3) {
+            return 3
+        } else if (Coin.numberCollectedCoins == 4) {
+            return 4
+        } else {
+            return 5
         }
     }
 }
@@ -108,7 +108,7 @@ class StatusbarBottle extends DrawableObject {
 
     ]
 
-    numberBottles = 0;
+    /* numberBottles = 0; */
 
 
     constructor() {
