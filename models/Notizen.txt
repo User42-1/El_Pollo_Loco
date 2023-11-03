@@ -1,0 +1,6 @@
+Wenn Spiel neu gestartet:
+ - world läuft weiter (nicht neu erstellen)
+ - aber level neu erstellen (level1 oder anderes)
+ - alle Variablen zurücksetzen (enemies,...)
+ - run() neu aufrufen
+ - draw() neu aufrufen

@@ -157,8 +157,8 @@ class World {
         }
 
         // eigentliches Zeichnen
-        mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        mo.draw(this.ctx); // In drawable-object.class.js: ctx.drawImage(img, x, y, width, height);
+        mo.drawFrame(this.ctx); // frame um img wird gezeichnet
 
         // Context-Einstellungen werden auf oben gespeicherte Einstellungen zurückgesetzt
         if (mo.otherDirection) {
