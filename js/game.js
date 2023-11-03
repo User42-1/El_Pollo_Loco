@@ -52,3 +52,38 @@ window.addEventListener('keyup', (e) => {
         keyboard.D = false;
     }
 });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var image = document.getElementById("iconLeft");
+
+    image.addEventListener("mousedown", () => { keyboard.LEFT = true; });
+    image.addEventListener("touchstart", () => { keyboard.LEFT = true; });
+
+    image.addEventListener("mouseup", () => { keyboard.LEFT = false; });
+    image.addEventListener("touchend", () => { keyboard.LEFT = false; });
+
+    var image = document.getElementById("iconRight");
+
+    image.addEventListener("mousedown", () => { keyboard.RIGHT = true; });
+    image.addEventListener("touchstart", () => { keyboard.RIGHT = true; });
+
+    image.addEventListener("mouseup", () => { keyboard.RIGHT = false; });
+    image.addEventListener("touchend", () => { keyboard.RIGHT = false; });
+
+    var image = document.getElementById("iconUp");
+
+    image.addEventListener("mousedown", () => { keyboard.UP = true; });
+    image.addEventListener("touchstart", () => { keyboard.UP = true; });
+
+    image.addEventListener("mouseup", () => { keyboard.UP = false; });
+    image.addEventListener("touchend", () => { keyboard.UP = false; });
+
+    var image = document.getElementById("attack");
+
+    image.addEventListener("mousedown", () => { keyboard.D = true; });
+    image.addEventListener("touchstart", () => { keyboard.D = true; });
+
+    image.addEventListener("mouseup", () => { keyboard.D = false; });
+    image.addEventListener("touchend", () => { keyboard.D = false; });
+});
