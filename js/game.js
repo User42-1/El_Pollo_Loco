@@ -53,9 +53,9 @@ window.addEventListener('keyup', (e) => {
     }
 });
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    var image = document.getElementById("iconLeft");
+// Control buttons for mobile devices
+document.addEventListener("DOMContentLoaded", function() { // wait until DOM has been loaded
+    var image = document.getElementById("iconLeft"); // move left
 
     image.addEventListener("mousedown", () => { keyboard.LEFT = true; });
     image.addEventListener("touchstart", () => { keyboard.LEFT = true; });
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
     image.addEventListener("mouseup", () => { keyboard.LEFT = false; });
     image.addEventListener("touchend", () => { keyboard.LEFT = false; });
 
-    var image = document.getElementById("iconRight");
+    var image = document.getElementById("iconRight"); // move right
 
     image.addEventListener("mousedown", () => { keyboard.RIGHT = true; });
     image.addEventListener("touchstart", () => { keyboard.RIGHT = true; });
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
     image.addEventListener("mouseup", () => { keyboard.RIGHT = false; });
     image.addEventListener("touchend", () => { keyboard.RIGHT = false; });
 
-    var image = document.getElementById("iconUp");
+    var image = document.getElementById("iconUp"); // jump
 
     image.addEventListener("mousedown", () => { keyboard.UP = true; });
     image.addEventListener("touchstart", () => { keyboard.UP = true; });
@@ -79,11 +79,39 @@ document.addEventListener("DOMContentLoaded", function() {
     image.addEventListener("mouseup", () => { keyboard.UP = false; });
     image.addEventListener("touchend", () => { keyboard.UP = false; });
 
-    var image = document.getElementById("attack");
+    var image = document.getElementById("attack"); // throw bottle
 
     image.addEventListener("mousedown", () => { keyboard.D = true; });
     image.addEventListener("touchstart", () => { keyboard.D = true; });
 
     image.addEventListener("mouseup", () => { keyboard.D = false; });
     image.addEventListener("touchend", () => { keyboard.D = false; });
+});
+
+// Control buttons for background music
+document.addEventListener("DOMContentLoaded", function() {
+    var backgroundMusic = document.getElementById("backgroundMusic");
+    var playButton = document.getElementById("sound_on");
+    var pauseButton = document.getElementById("sound_off");
+    /* var muteButton = document.getElementById("sound_off"); */
+
+    // Play the background music
+    playButton.addEventListener("click", function() {
+        backgroundMusic.play();
+        backgroundMusic.volume = 0.3;
+    });
+
+    // Pause the background music
+    pauseButton.addEventListener("click", function() {
+        backgroundMusic.pause();
+    });
+    /* 
+        // Mute/unmute the background music
+        muteButton.addEventListener("click", function() {
+            if (backgroundMusic.muted) {
+                backgroundMusic.muted = false;
+            } else {
+                backgroundMusic.muted = true;
+            }
+        }); */
 });
