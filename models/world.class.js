@@ -18,8 +18,6 @@ class World {
     statusbarBottle = new StatusbarBottle();
     lastCharacterY = 155;
 
-
-
     // Variablen und #funktionen im Constructor immer mit 'this' davor ((für Instanzen))
     constructor(canvas, keyboard) { // canvas wurde in game.js an world('canvas') übergeben (dann auch an (alle) Objekte (zB character) )
         this.ctx = canvas.getContext('2d'); // durch getContext('2d') werden die 'Zeichen'-Funktionen in canvas bereitgestellt
@@ -42,7 +40,8 @@ class World {
             this.checkCollisionsWithBottle();
             this.checkCollisionsWithCoin();
             this.checkThrowObjects();
-        }, 200);
+            this.checkBossHitWithBottle();
+        }, 50);
     }
 
     characterIsAboveGround() {
@@ -71,7 +70,7 @@ class World {
                 setTimeout(() => {
                     delete this.level.enemies[index];
                     /* this.level.enemies.splice([index], 1); */
-                }, 1000)
+                }, 500)
             } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
@@ -84,18 +83,19 @@ class World {
             if (this.character.isColliding(bottle) && !this.character.isHurt()) {
                 /* console.log(index); */
                 BottleGround.numberCollectedBottles++;
-                console.log(BottleGround.numberCollectedBottles);
+                /* console.log(BottleGround.numberCollectedBottles); */
                 this.statusbarBottle.displayNumberBottles(BottleGround.numberCollectedBottles);
                 delete this.level.bottles_ground[index];
             }
         });
     }
+
     checkCollisionsWithCoin() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin) && !this.character.isHurt()) {
                 /* console.log(index); */
                 Coin.numberCollectedCoins++;
-                console.log(Coin.numberCollectedCoins);
+                /* console.log(Coin.numberCollectedCoins); */
                 this.statusbarCoin.displayNumberCoins(Coin.numberCollectedCoins);
                 delete this.level.coins[index];
             }
@@ -104,14 +104,23 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
+            this.throwableBottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
             if (BottleGround.numberCollectedBottles > 0) {
-                this.throwableObjects.push(bottle);
+                this.throwableObjects.push(this.throwableBottle);
                 BottleGround.numberCollectedBottles--;
                 this.statusbarBottle.displayNumberBottles(BottleGround.numberCollectedBottles);
             }
         }
     }
+
+    checkBossHitWithBottle() {
+        this.throwableObjects.forEach((throwableBottle) => {
+            if (throwableBottle.isColliding(this.level.enemies[3])) {
+                console.log("Endboss has been hit");
+                this.throwableObjects.pop();
+            };
+        });
+    };
 
     draw() { // this.draw (hier = world.draw) zeichnet die gesamte Map
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleared canvas vor jedem neuem draw() The cleared area is set to tranparent rgba(0,0,0,0).
