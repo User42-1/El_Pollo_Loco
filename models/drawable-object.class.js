@@ -7,6 +7,11 @@ class DrawableObject {
     height = 150;
     width = 100;
 
+    offset_left = 0; // offset between left side of image and left side of hitbox
+    offset_right = 0;
+    offset_top = 0;
+    offset_bottom = 0;
+
     // loadImage('img/test.png')
     loadImage(path) { // erstellt eine neues Image-Objekt, weist diesem einen Quellpfad zu und gibt es "im Hintergrund zurück" --> Das zurückgegebene Obj kann dann an anderer Stelle im Code vervendet oder auf dem Canvas angezeigt werden. 
             this.img = new Image(); // Die Funktion Image() ist eine integrierte Funktion des HTML5 Canvas-Elements 
@@ -52,9 +57,24 @@ class DrawableObject {
     }
 
     // zB character.isColliding(chicken)
+    i
+    /* isColliding(obj) {
+        return (
+            this.x + this.width >= obj.x &&
+            this.x <= obj.x + obj.width &&
+            this.y + this.height >= obj.y &&
+            this.y <= obj.y + obj.height
+        );
+    } */
+
     isColliding(obj) {
-        return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
-            (this.y + this.height) >= obj.y && this.y <= (obj.y + obj.height);
+        return (
+            (this.x + this.width - this.offset_right) >= obj.x + obj.offset_left &&
+            (this.x + this.offset_left) <= (obj.x + obj.width - obj.offset_right) &&
+            (this.y + this.height - this.offset_bottom) >= obj.y + obj.offset_top &&
+            (this.y + this.offset_top) <= (obj.y + obj.height - obj.offset_bottom) //&&
+            //obj.onCollisionCourse(this)
+        );
     }
 
 }

@@ -2,7 +2,6 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard); // variables canvas and keyboard are passed to the constructor in world.class.js
@@ -29,7 +28,6 @@ window.addEventListener('keydown', (e) => {
     if (e.key === 'd' || e.key === 'D') {
         keyboard.D = true;
     }
-
 }); // Eventlistener returns JSON with the respective events (('keypress' returns when character-keys are hit, not arrow-keys))
 
 window.addEventListener('keyup', (e) => {

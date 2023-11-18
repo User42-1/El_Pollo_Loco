@@ -4,6 +4,12 @@ class Endboss extends MoveableObject {
     y = 145;
     height = 300;
     width = 250;
+
+    offset_left = 50; // offset between left side of image and left side of hitbox
+    offset_right = 0;
+    offset_top = 100;
+    offset_bottom = 0;
+
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',

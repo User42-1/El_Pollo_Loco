@@ -11,12 +11,16 @@ class World {
     /*     collectableObjects = [];
      */
     throwableObjects = [];
-    /*     collectableObjects = [];
-     */
+    throwIsBlocked = false;
+
     statusBar = new Statusbar();
     statusbarCoin = new StatusbarCoin();
     statusbarBottle = new StatusbarBottle();
     lastCharacterY = 155;
+
+    endbossIsHit = false;
+
+
 
     // Variablen und #funktionen im Constructor immer mit 'this' davor ((für Instanzen))
     constructor(canvas, keyboard) { // canvas wurde in game.js an world('canvas') übergeben (dann auch an (alle) Objekte (zB character) )
@@ -41,7 +45,7 @@ class World {
             this.checkCollisionsWithCoin();
             this.checkThrowObjects();
             this.checkBossHitWithBottle();
-        }, 50);
+        }, 15);
     }
 
     characterIsAboveGround() {
@@ -70,7 +74,7 @@ class World {
                 setTimeout(() => {
                     delete this.level.enemies[index];
                     /* this.level.enemies.splice([index], 1); */
-                }, 500)
+                }, 150)
             } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
@@ -103,12 +107,17 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.throwIsBlocked == false) {
+            this.endbossIsHit = false;
             this.throwableBottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
+            this.throwIsBlocked = true;
+            setTimeout(() => {
+                this.throwIsBlocked = false;
+            }, 1000);
             if (BottleGround.numberCollectedBottles > 0) {
                 this.throwableObjects.push(this.throwableBottle);
-                BottleGround.numberCollectedBottles--;
-                this.statusbarBottle.displayNumberBottles(BottleGround.numberCollectedBottles);
+                /* BottleGround.numberCollectedBottles--;
+                this.statusbarBottle.displayNumberBottles(BottleGround.numberCollectedBottles); */
             }
         }
     }
@@ -117,7 +126,16 @@ class World {
         this.throwableObjects.forEach((throwableBottle) => {
             if (throwableBottle.isColliding(this.level.enemies[3])) {
                 console.log("Endboss has been hit");
+                this.endbossIsHit = true;
+                let lastThrownBottle = throwableBottle;
                 this.throwableObjects.pop();
+                /* let splashObject = new SplashObject(lastThrownBottle.x, lastThrownBottle.y);
+                splashObject.splashBottle(); */
+                /* let splashObject = new ThrowableObject(lastThrownBottle.x, lastThrownBottle.y);
+                splashObject.splashBottle(); */
+
+                /* this.lastThrownBottlePositionX = lastThrownBottle.x;
+                this.lastThrownBottlePositiony = lastThrownBottle.y; */
             };
         });
     };
@@ -135,6 +153,7 @@ class World {
         this.addObjectsToMap(this.level.bottles_ground);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.throwableObjects);
+        /* this.addObjectsToMap(this.splashObject); */
 
         this.addToMap(this.character); // 'addToMap' wird unten defeniniert(zeichnet auf canvas)
 
